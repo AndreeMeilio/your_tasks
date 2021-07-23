@@ -10,7 +10,6 @@ class MataPelajaran extends Model
     use HasFactory;
 
     protected $table = 'matapelajaran';
-    protected $primaryKey = 'idMatapelajaran';
     public $incrementing = false;
     protected $keyType = 'string';
 

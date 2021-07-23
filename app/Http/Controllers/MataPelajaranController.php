@@ -20,7 +20,9 @@ class MataPelajaranController extends Controller
 
     public function create()
     {
-        return view('matapelajaran.create');
+        $data_mata_pelajaran = MataPelajaran::all();
+
+        return view('matapelajaran.create', ['data_mata_pelajaran' => $data_mata_pelajaran]);
     }
 
 
@@ -32,12 +34,12 @@ class MataPelajaranController extends Controller
         $deskripsiMatapelajaran = $request->input('deskripsiMataPelajaran');
 
         MataPelajaran::create([
-            "idMatapelajaran" => $idMatapelajaran,
+            "id" => $idMatapelajaran,
             "namaMatapelajaran" => $namaMatapelajaran,
             "deskripsiMatapelajaran" => $deskripsiMatapelajaran
         ]);
 
-        return redirect()->back();
+        return redirect()->route('matapelajaran');
     }
 
 
@@ -49,7 +51,7 @@ class MataPelajaranController extends Controller
     
     public function edit(MataPelajaran $mataPelajaran, $idMatapelajaran)
     {
-        $mata_pelajaran = MataPelajaran::where('idMatapelajaran', $idMatapelajaran)
+        $mata_pelajaran = MataPelajaran::where('id', $idMatapelajaran)
                                 ->first();
 
         var_dump($mata_pelajaran);

@@ -3,83 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tugas;
+use App\Models\MataPelajaran;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class TugasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index($idMatapelajaran)
     {
-        //
+        $data_mata_pelajaran = MataPelajaran::all();
+        $data_status = Status::all();
+
+        $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
+                            ->with('statustugas')
+                            ->get();
+
+
+        return view('tugas.index', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran, 'data_tugas' => $data_tugas, 'data_status' => $data_status]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // public function get($idMatapelajaran, $idStatustugas = null)
+    // {
+    //     if ($idStatustugas != null){
+    //         $data_tugas = Tugas::where('idMatapelajaran', $idMatapelajaran)
+    //                                 ->where('idStatustugas', $idStatustugas)
+    //                                 ->get();
+    //     } else {
+    //         $data_tugas = Tugas::where('idMatapelajaran', $idMatapelajaran)->get();
+    //     }
+
+    //     return response()->json($data_tugas);
+    // }
+
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tugas  $tugas
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Tugas $tugas)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tugas  $tugas
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Tugas $tugas)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tugas  $tugas
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Tugas $tugas)
     {
-        //
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tugas  $tugas
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Tugas $tugas)
     {
-        //
+        
     }
 }

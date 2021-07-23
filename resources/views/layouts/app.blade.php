@@ -6,14 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+    <!-- Vendor -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/all.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}" type="text/css">
 
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
 
     {{-- CSS For Template --}}
     <link rel="stylesheet" href="{{ asset('assets/css/sb-admin-2.min.css') }}">
@@ -31,9 +28,17 @@
                     @yield('content')
                 </div>
             </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; your_tasks 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>        
     </div>
-
     
     
     {{-- VENDOR --}}
@@ -41,9 +46,12 @@
     <script src="{{ asset('assets/vendor/fontawesome/all.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
     
     {{-- Javascript For Template --}}
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
-    
+
+    @yield('javascript')
+
 </body>
 </html>

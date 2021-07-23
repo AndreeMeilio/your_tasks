@@ -47,8 +47,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Daftar Mata Pelajaran</h6>
                 @foreach ($data_mata_pelajaran as $item)
-                    <a class="collapse-item" href="{{ route('tugasMatapelajaran', ['idMatapelajaran'=>$item->idMatapelajaran]) }}">{{ $item->namaMatapelajaran }}</a>
+                    <a class="collapse-item" href="{{ route('tugas', ['idMatapelajaran'=>$item->id]) }}">{{ $item->namaMatapelajaran }}</a>
                 @endforeach
+
+                <hr class="sidebar-divider">
                 <a class="collapse-item" href="{{ route('matapelajaranCreate') }}">
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Mata Pelajaran</span>

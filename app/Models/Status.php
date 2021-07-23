@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tugas extends Model
+class Status extends Model
 {
     use HasFactory;
 
-    protected $table = 'tugas';
+    protected $table = 'statustugas';
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public function statustugas()
+    public function tugas()
     {
-        return $this->belongsTo(Status::class);
+        return $this->hasMany(Tugas::class);
     }
 }

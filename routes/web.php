@@ -29,7 +29,9 @@ Route::prefix('matapelajaran')->group(function(){
     Route::get('{idMatapelajaran}/delete', [MataPelajaranController::class, 'delete'])->name('matapelajaranDelete');
 
     Route::prefix('{idMatapelajaran}/tugas')->group(function(){
-        Route::get('', [TugasController::class, 'index'])->name('tugasMatapelajaran');
+        Route::get('', [TugasController::class, 'index'])->name('tugas');
+        Route::get('create', [TugasController::class, 'create'])->name('tugasCreate');
+        Route::get('get/{idStatustugas?}', [TugasController::class, 'get'])->name('getTugas');
     });
 });
 
