@@ -33,13 +33,22 @@ class MataPelajaranController extends Controller
         $namaMatapelajaran = $request->input('namaMataPelajaran');
         $deskripsiMatapelajaran = $request->input('deskripsiMataPelajaran');
 
-        MataPelajaran::create([
+        $tambah_mata_pelajaran = MataPelajaran::create([
             "id" => $idMatapelajaran,
             "namaMatapelajaran" => $namaMatapelajaran,
             "deskripsiMatapelajaran" => $deskripsiMatapelajaran
         ]);
 
-        return redirect()->route('matapelajaran');
+        $messageSuccess = "";
+        $messageFailed = "";
+
+        if ($tambah_mata_pelajaran){
+            $messageSuccess = "$namaMatapelajaran Berhasil Ditambah Kedalam Mata Pelajaran";
+        } else {
+            $messageFailed = "$namaMatapelajaran Gagal Ditambah Kedalam Mata Pelajaran";
+        }
+
+        return redirect(route('matapelajaran'))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
     }
 
 
@@ -51,21 +60,52 @@ class MataPelajaranController extends Controller
     
     public function edit(MataPelajaran $mataPelajaran, $idMatapelajaran)
     {
+        $data_mata_pelajaran = MataPelajaran::all();
+
         $mata_pelajaran = MataPelajaran::where('id', $idMatapelajaran)
                                 ->first();
 
-        var_dump($mata_pelajaran);
-        die();
+        return view('matapelajaran.edit', ['data_mata_pelajaran' => $data_mata_pelajaran ,'mata_pelajaran' => $mata_pelajaran]);
     }
 
-    public function update(Request $request, MataPelajaran $mataPelajaran)
+    public function update(Request $request)
     {
-        //
+        $idMatapelajaran = $request->idMatapelajaran;
+
+        $update_mata_pelajaran = MataPelajaran::where('id', $idMatapelajaran)
+                                                ->update([
+                                                    'namaMatapelajaran' => $request->input("namaMataPelajaran"),
+                                                    'deskripsiMatapelajaran' => $request->input("deskripsiMataPelajaran")
+                                                ]);
+
+        $messageSuccess = "";
+        $messageFailed = "";
+
+        if ($update_mata_pelajaran){
+            $messageSuccess = "Edit Data Mata Pelajaran Berhasil";
+        } else {
+            $messageFailed = "Edit Data Mata Pelajaran Gagal";
+        }
+
+        return redirect(route('matapelajaran'))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
     }
 
 
-    public function destroy(MataPelajaran $mataPelajaran)
+    public function destroy(Request $request)
     {
-        //
+        $mata_pelajaran = MataPelajaran::find($request->input('idMatapelajaran'));
+
+        $hapus_mata_pelajaran = $mata_pelajaran->delete();
+
+        $messageSuccess = "";
+        $messageFailed = "";
+
+        if ($hapus_mata_pelajaran){
+            $messageSuccess = "Data Mata Pelajaran Berhasil Dihapus";
+        } else {
+            $messageFailed = "Data Mata Pelajaran Gagal Dihapus";
+        }
+
+        return redirect(route('matapelajaran'))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
     }
 }

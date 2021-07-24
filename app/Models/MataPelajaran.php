@@ -13,5 +13,5 @@ class MataPelajaran extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['idMatapelajaran', 'idUser', 'namaMatapelajaran', 'deskripsiMatapelajaran', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'idUser', 'namaMatapelajaran', 'deskripsiMatapelajaran'];
 }
