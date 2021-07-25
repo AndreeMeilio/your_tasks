@@ -17,6 +17,6 @@ class Tugas extends Model
 
     public function statustugas()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(StatusTugas::class);
     }
 }

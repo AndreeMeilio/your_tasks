@@ -2,6 +2,8 @@
 
 @section('content')
 
+<p>Jumlah Tugas : {{ count($data_tugas) }}</p>
+
 <a class="btn btn-success" href="{{ route('tugasCreate', ['idMatapelajaran' => $idMatapelajaran]); }}"><i class="fas fa-book-medical"></i></a>
 
 <select id="statusTugas" class="form-select mb-3" aria-label="Default select example">

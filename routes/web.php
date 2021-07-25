@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\StatusTugasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::prefix('matapelajaran')->group(function(){
         Route::post('delete', [TugasController::class, 'destroy'])->name('tugasDelete');
     });
 });
+
+Route::get('setStatusColor', [StatusTugasController::class, 'index'])->name('setStatusColor');
+Route::post('setStatusColor/proses', [StatusTugasController::class, 'setStatusColor'])->name('setStatusColorProses');
 
 
 

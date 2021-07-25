@@ -77,7 +77,7 @@
 
     <!-- Nav Item - Color -->
     <li class="nav-item">
-        <a class="nav-link" href="/color">
+        <a class="nav-link" href="{{ route('setStatusColor') }}">
             <i class="fas fa-fw fa-palette"></i>
             <span>Color</span>
         </a>

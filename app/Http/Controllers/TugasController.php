@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tugas;
 use App\Models\MataPelajaran;
-use App\Models\Status;
+use App\Models\StatusTugas;
 use Illuminate\Http\Request;
 
 class TugasController extends Controller
@@ -13,12 +13,19 @@ class TugasController extends Controller
     public function index($idMatapelajaran)
     {
         $data_mata_pelajaran = MataPelajaran::all();
-        $data_status = Status::all();
+        $data_status = StatusTugas::all();
+
+        $tugas_belum_dikerjakan = Tugas::where('statustugas_id', $data_status[1]->id)->get();
+
+        foreach($tugas_belum_dikerjakan as $item){
+            if (date('Y-m-d') > $item->tanggaldeadlineTugas){
+                $item->update(['statustugas_id' => $data_status[2]->id]);
+            }
+        }
 
         $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
                             ->with('statustugas')
                             ->get();
-
 
         return view('tugas.index', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran, 'data_tugas' => $data_tugas, 'data_status' => $data_status]);
     }
@@ -28,9 +35,9 @@ class TugasController extends Controller
         $tugas = Tugas::where('id', $request->idTugas)->first();
                                         
         if (date('Y-m-d') > $tugas->tanggaldeadlineTugas){
-            $statustugas = Status::where('aliasStatustugas', 'sudah_batas_waktu_terlewat')->first();
+            $statustugas = StatusTugas::where('aliasStatustugas', 'sudah_batas_waktu_terlewat')->first();
         } else {
-            $statustugas = Status::where('aliasStatustugas', 'sudah_dikerjakan')->first();
+            $statustugas = StatusTugas::where('aliasStatustugas', 'sudah_dikerjakan')->first();
         }
 
         $update_status_tugas = $tugas->update(['statustugas_id' => $statustugas->id]);
@@ -61,7 +68,7 @@ class TugasController extends Controller
 
     public function store(Request $request)
     {
-        $status_id = Status::where('aliasStatustugas', 'belum_dikerjakan')->first();
+        $status_id = StatusTugas::where('aliasStatustugas', 'belum_dikerjakan')->first();
 
         $idTugas = uniqid('tgs');
         $idMatapelajaran = $request->idMatapelajaran;

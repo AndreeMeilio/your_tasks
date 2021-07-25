@@ -42,15 +42,8 @@
                     @yield('content')
                 </div>
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; your_tasks 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            
+            @include('layouts.footer')
         </div>        
     </div>
     
@@ -63,6 +56,7 @@
     <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.js') }}"></script>
     <script src="{{ asset('assets/vendor/date-time-picker/DateTimePicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/iro-color-picker/iro.js') }}"></script>
     
     {{-- Javascript For Template --}}
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
