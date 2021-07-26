@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/date-time-picker/DateTimePicker.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/main.min.css') }}" type="text/css">
 
 
     {{-- CSS For Template --}}
@@ -57,6 +58,7 @@
     <script src="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.js') }}"></script>
     <script src="{{ asset('assets/vendor/date-time-picker/DateTimePicker.js') }}"></script>
     <script src="{{ asset('assets/vendor/iro-color-picker/iro.js') }}"></script>
+    <script src="{{ asset('assets/vendor/fullcalendar/main.min.js') }}"></script>
     
     {{-- Javascript For Template --}}
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>

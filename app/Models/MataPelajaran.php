@@ -14,4 +14,9 @@ class MataPelajaran extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['id', 'idUser', 'namaMatapelajaran', 'deskripsiMatapelajaran'];
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }

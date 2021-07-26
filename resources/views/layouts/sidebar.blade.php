@@ -59,6 +59,14 @@
         </div>
     </li>
 
+    <!-- Nav Item - Tugas Berbintang -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('tugasBerbintang') }}">
+            <i class="fas fa-fw fa-star"></i>
+            <span>Tugas Berbintang</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 

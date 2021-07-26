@@ -23,11 +23,48 @@ class TugasController extends Controller
             }
         }
 
-        $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
+        
+        return view('tugas.index', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran, 'data_status' => $data_status]);
+    }
+
+    public function kalendar_mode($idMatapelajaran)
+    {
+        $data_mata_pelajaran = MataPelajaran::all();
+        $data_status = StatusTugas::all();
+
+        $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)->get();
+
+        return view('tugas.mode-kalendar.index', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran, 'data_tugas' => $data_tugas, 'data_status' => $data_status]);
+    }
+
+    public function tugasBerbintang()
+    {
+        $data_mata_pelajaran = MataPelajaran::all();
+
+        $data_tugas = Tugas::where('tugas_berbintang', 2)
                             ->with('statustugas')
+                            ->with('matapelajaran')
                             ->get();
 
-        return view('tugas.index', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran, 'data_tugas' => $data_tugas, 'data_status' => $data_status]);
+        return view('tugas.tugas_berbintang', ['data_mata_pelajaran' => $data_mata_pelajaran, 'data_tugas' => $data_tugas]);
+    }
+
+    public function get($idMatapelajaran, $idStatustugas = null)
+    {
+        $data_tugas;
+
+        if ($idStatustugas != null){
+            $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
+                            ->where('statustugas_id', $idStatustugas)
+                            ->with('statustugas')
+                            ->get();
+        } else {
+            $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
+                                ->with('statustugas')
+                                ->get();
+        }
+
+        return response()->json($data_tugas);
     }
 
     public function tandai_terselesaikan(Request $request)
@@ -56,6 +93,24 @@ class TugasController extends Controller
         }
 
         return redirect(route('tugas', ['idMatapelajaran' => $request->idMatapelajaran]))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
+    }
+
+    public function tandai_tugas_berbintang(Request $request)
+    {
+        $tugas = Tugas::where('id', $request->idTugas)->first();
+
+        $tandai_tugas_berbintang = $tugas->update(['tugas_berbintang' => 2]);
+
+        $message = "";
+        // $messageFailed = "";
+
+        if ($tandai_tugas_berbintang){
+            $message = "Data tugas dengan nama tugas $tugas->namaTugas berhasil ditandai sebagai tugas berbintang";
+        } else {
+            $message = "data tidak bisa ditandai sebagai tugas berbintang";
+        }
+
+        return response()->json($message);
     }
 
     public function create($idMatapelajaran)
@@ -141,19 +196,19 @@ class TugasController extends Controller
 
     public function destroy(Request $request)
     {
-        $tugas = Tugas::find($request->input('idTugas'));
+        $tugas = Tugas::find($request->idTugas);
 
         $hapus_tugas = $tugas->delete();
 
-        $messageSuccess = "";
-        $messageFailed = "";
+        $message = "";
+        // $messageFailed = "";
 
         if ($hapus_tugas){
-            $messageSuccess = "Data Tugas Berhasil Dihapus";
+            $message = "Data Tugas Berhasil Dihapus";
         } else {
-            $messageFailed = "Data Tugas Gagal Dihapus";
+            $message = "Data Tugas Gagal Dihapus";
         }
 
-        return redirect(route('tugas', ['idMatapelajaran' => $request->idMatapelajaran]))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
+        return response()->json($message);
     }
 }

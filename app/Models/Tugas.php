@@ -13,10 +13,15 @@ class Tugas extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'matapelajaran_id', 'namaTugas', 'deskripsiTugas', 'guruBersangkutan', 'tanggaldiberiTugas', 'tanggaldeadlineTugas', 'tempatpengumpulanTugas', 'statustugas_id'];
+    protected $fillable = ['id', 'matapelajaran_id', 'namaTugas', 'deskripsiTugas', 'guruBersangkutan', 'tanggaldiberiTugas', 'tanggaldeadlineTugas', 'tempatpengumpulanTugas', 'statustugas_id', 'tugas_berbintang'];
 
     public function statustugas()
     {
         return $this->belongsTo(StatusTugas::class);
+    }
+
+    public function matapelajaran()
+    {
+        return $this->belongsTo(MataPelajaran::class);
     }
 }

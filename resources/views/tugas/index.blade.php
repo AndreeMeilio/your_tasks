@@ -1,17 +1,27 @@
 @extends('layouts/app')
 
 @section('content')
+<div class="d-none d-lg-none" id="idMatapelajaran">{{ $idMatapelajaran }}</div>
 
-<p>Jumlah Tugas : {{ count($data_tugas) }}</p>
+<div id="notifikasi"></div>
 
 <a class="btn btn-success" href="{{ route('tugasCreate', ['idMatapelajaran' => $idMatapelajaran]); }}"><i class="fas fa-book-medical"></i></a>
 
 <select id="statusTugas" class="form-select mb-3" aria-label="Default select example">
-    <option value="-" selected>Lihat Tugas Berdasarkan</option>
+    <option value="" selected>Lihat Tugas Berdasarkan</option>
     @foreach ($data_status as $item)
-        <option value="{{ $item->idStatustugas }}">{{ $item->deskripsiStatustugas }}</option>
+    <option value="{{ $item->id }}">{{ $item->deskripsiStatustugas }}</option>
     @endforeach
 </select>
+
+<div class="row">
+    <div class="col-6 col-lg-6">
+        Jumlah Tugas : <span id="jumlahTugas"></span>
+    </div>
+    <div class="col-6 col-lg-6">
+        <a class="btn btn-secondary float-end" href="{{ route('tugasKalendarMode', ['idMatapelajaran' => $idMatapelajaran]) }}"><i class="fas fa-fw fa-calendar-alt"></i><span>Kalendar Mode</span></a>
+    </div>
+</div>
 
 <div class="table-responsive">
     <div class="d-none d-lg-inline">
@@ -28,8 +38,8 @@
                     </tr>
                 </div>
             </thead>
-            <tbody>
-                @foreach ($data_tugas as $item)
+            <tbody id="data_tugas_tabel">
+                {{-- @foreach ($data_tugas as $item)
                     <div class="row">
                         <tr style="font-weight: bold; color: black;" bgcolor="{{ $item->statustugas->colorStatustugas }}">
                             <td class="col-md-2">{{ $item->namaTugas }}</td>
@@ -48,7 +58,7 @@
                             </td>  
                         </tr>    
                     </div>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>
@@ -63,8 +73,8 @@
                     <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($data_tugas as $item)
+            <tbody id="data_tugas_tabel_mobile">
+                {{-- @foreach ($data_tugas as $item)
                     <tr>
                         <td>{{ $item->namaTugas }}</td>
                         <td>{{ $item->tanggaldeadlineTugas }}</td>
@@ -75,61 +85,13 @@
                             <abbr title="Klik untuk melihat tugas pada tugas ini"><a class="btn btn-success w-10 h-10 rounded-circle" href="#"><i class="fas fa-check-circle"></i></a></abbr>    
                         </td>  
                     </tr>    
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
-    </div>
-
-    {{-- Form Untuk Menghapus Data --}}
-    <div class="d-none d-lg-none">
-        <form id="formHapus" method="POST">@csrf<input name="idTugas" id="idTugastext" type="text"><input type="submit" id="submitButton"></form>
     </div>
 </div>
 @endsection
 
 @section('javascript')
-
-    {{-- Simple Data Table --}}
-    <script>
-        const tableElement = document.querySelector("#tableTugas");
-        const tableElementMobile = document.querySelector("#tableTugasMobile");
-
-        const dataTable = new simpleDatatables.DataTable(tableElement);
-        const dataTableMobile = new simpleDatatables.DataTable(tableElementMobile);
-    </script>
-
-    <script>
-        $(document).ready(function(){
-
-            $(document).on('click', '.buttonHapus', function(){
-                var idMatapelajaran = "{{ $idMatapelajaran }}";
-                var idTugas = $(this).val();
-
-                var urlHapus = '/matapelajaran/' + idMatapelajaran + '/tugas/delete'
-
-                $.confirm({
-                    title: 'Hapus Data Tugas',
-                    content: 'Apakah anda yakin ingin menghapus data tugas ini?',
-                    type: 'red',
-                    typeAnimated: true,
-                    autoClose : 'cancelAction|10000',
-                    buttons: {
-                        tryAgain: {
-                            text: 'Yakin',
-                            btnClass: 'btn-red',
-                            action: function(){
-                                $("#formHapus").attr('action', urlHapus);
-                                $('#idTugastext').val(idTugas);
-
-                                $('#submitButton').click();
-                            }
-                        },
-                        cancelAction: function () {
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-
+    <script src="{{ asset('assets/js/tugas/tugas.js') }}"></script>
 @endsection
