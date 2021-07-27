@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Tugas;
 use App\Models\MataPelajaran;
 use App\Models\StatusTugas;
@@ -12,7 +13,7 @@ class TugasController extends Controller
 
     public function index($idMatapelajaran)
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
         $data_status = StatusTugas::all();
 
         $tugas_belum_dikerjakan = Tugas::where('statustugas_id', $data_status[1]->id)->get();
@@ -29,7 +30,7 @@ class TugasController extends Controller
 
     public function kalendar_mode($idMatapelajaran)
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
         $data_status = StatusTugas::all();
 
         $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)->get();
@@ -39,12 +40,15 @@ class TugasController extends Controller
 
     public function tugasBerbintang()
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
-        $data_tugas = Tugas::where('tugas_berbintang', 2)
-                            ->with('statustugas')
-                            ->with('matapelajaran')
-                            ->get();
+        $data_tugas = MataPelajaran::where('users_id', Auth::user()->id)
+                                    ->with('tugas', function($query){
+                                        $query->where('tugas_berbintang', 2)
+                                              ->with('statustugas');
+                                    })
+                                    ->get();
+
 
         return view('tugas.tugas_berbintang', ['data_mata_pelajaran' => $data_mata_pelajaran, 'data_tugas' => $data_tugas]);
     }
@@ -115,7 +119,7 @@ class TugasController extends Controller
 
     public function create($idMatapelajaran)
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
         return view('tugas.create', ['data_mata_pelajaran' => $data_mata_pelajaran, 'idMatapelajaran' => $idMatapelajaran]);
     }
@@ -161,7 +165,7 @@ class TugasController extends Controller
 
     public function edit(Request $request)
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
         $tugas = Tugas::where('id', $request->idTugas)->first();
 

@@ -70,13 +70,13 @@ $(document).ready(function(){
                                             <abbr title="Klik untuk menghapus data tugas ini"><button class="btn btn-danger w-10 h-10 rounded-circle buttonHapus" value="`+ element.id +`"><i class="fas fa-trash-alt"></i></button></abbr>`;
 
                                             if (element.tugas_berbintang == 1){
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 ms-1 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="far fa-star"></i></button></abbr>`;   
+                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="far fa-star"></i></button></abbr>`;   
                                             } else {
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 ms-1 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="fas fa-star"></i></button></abbr>`;
+                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="fas fa-star"></i></button></abbr>`;
                                             }
 
                                             if (element.statustugas.aliasStatustugas != 'sudah_dikerjakan' && element.statustugas.aliasStatustugas != 'sudah_batas_waktu_terlewat'){
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><a class="btn btn-success w-10 h-10 ms-1 rounded-circle" href="/matapelajaran/`+ element.matapelajaran_id +`/tugas/`+ element.id +`/check"><i class="fas fa-check-circle"></i></a></abbr>`;
+                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><a class="btn btn-success w-10 h-10 rounded-circle" href="/matapelajaran/`+ element.matapelajaran_id +`/tugas/`+ element.id +`/check"><i class="fas fa-check-circle"></i></a></abbr>`;
                                             }
 
                                             data_tugas_tabel_mobile += `

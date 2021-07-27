@@ -1,69 +1,77 @@
 <!doctype html>
-<html lang="en">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Vendor -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/all.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/date-time-picker/DateTimePicker.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/main.min.css') }}" type="text/css">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
-    {{-- CSS For Template --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/sb-admin-2.min.css') }}">
+    @include('layouts.vendor.vendor_css')
 
     <title>Your Tasks</title>
 </head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<body id="page-top">
-    <div id="wrapper">
-        @include('layouts.sidebar')
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                @include('layouts.navbar')
-                <div class="container-fluid">
-                    @if (Session::get('success') != '')
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>{{ Session::get('success') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @elseif (Session::get('failed') != '')
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>{{ Session::get('failed') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @else
-                    @endif
-                    @yield('content')
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
                 </div>
             </div>
-            
-            @include('layouts.footer')
-        </div>        
+        </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
-    
-    
-    {{-- VENDOR --}}
-    <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('assets/vendor/fontawesome/all.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.js') }}"></script>
-    <script src="{{ asset('assets/vendor/date-time-picker/DateTimePicker.js') }}"></script>
-    <script src="{{ asset('assets/vendor/iro-color-picker/iro.js') }}"></script>
-    <script src="{{ asset('assets/vendor/fullcalendar/main.min.js') }}"></script>
-    
-    {{-- Javascript For Template --}}
-    <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
 
-    @yield('javascript')
-
+    @include('layouts.vendor.vendor_js')
 </body>
 </html>

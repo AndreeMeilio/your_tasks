@@ -13,10 +13,10 @@ class MataPelajaran extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'idUser', 'namaMatapelajaran', 'deskripsiMatapelajaran'];
+    protected $fillable = ['id', 'users_id', 'namaMatapelajaran', 'deskripsiMatapelajaran'];
 
     public function tugas()
     {
-        return $this->hasMany(Tugas::class);
+        return $this->hasMany(Tugas::class, 'matapelajaran_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\MataPelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +13,7 @@ class MataPelajaranController extends Controller
 
     public function index()
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
         return view('matapelajaran.index', ['data_mata_pelajaran' => $data_mata_pelajaran]);
     }
@@ -20,7 +21,7 @@ class MataPelajaranController extends Controller
 
     public function create()
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
         return view('matapelajaran.create', ['data_mata_pelajaran' => $data_mata_pelajaran]);
     }
@@ -35,6 +36,7 @@ class MataPelajaranController extends Controller
 
         $tambah_mata_pelajaran = MataPelajaran::create([
             "id" => $idMatapelajaran,
+            "users_id" => Auth::user()->id,
             "namaMatapelajaran" => $namaMatapelajaran,
             "deskripsiMatapelajaran" => $deskripsiMatapelajaran
         ]);
@@ -60,7 +62,7 @@ class MataPelajaranController extends Controller
     
     public function edit(MataPelajaran $mataPelajaran, $idMatapelajaran)
     {
-        $data_mata_pelajaran = MataPelajaran::all();
+        $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
         $mata_pelajaran = MataPelajaran::where('id', $idMatapelajaran)
                                 ->first();

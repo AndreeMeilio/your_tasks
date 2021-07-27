@@ -37,7 +37,7 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="me-2 img-profile rounded-circle"
                     src="{{ asset('assets/media/andree.png') }}">
-                <span class="d-none d-lg-inline text-gray-600 small">Andree Meilio C</span>
+                <span class="d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -55,9 +55,14 @@
                     Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </a>
             </div>
         </li>

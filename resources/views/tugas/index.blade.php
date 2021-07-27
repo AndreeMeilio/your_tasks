@@ -1,4 +1,4 @@
-@extends('layouts/app')
+@extends('layouts/main')
 
 @section('content')
 <div class="d-none d-lg-none" id="idMatapelajaran">{{ $idMatapelajaran }}</div>
