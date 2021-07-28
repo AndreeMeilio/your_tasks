@@ -60,10 +60,12 @@ class TugasController extends Controller
         if ($idStatustugas != null){
             $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
                             ->where('statustugas_id', $idStatustugas)
+                            ->orderBy('tugas_berbintang', 'DESC')
                             ->with('statustugas')
                             ->get();
         } else {
             $data_tugas = Tugas::where('matapelajaran_id', $idMatapelajaran)
+                                ->orderBy('tugas_berbintang', 'DESC')
                                 ->with('statustugas')
                                 ->get();
         }

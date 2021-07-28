@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/date-time-picker/DateTimePicker.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/main.min.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/vendor/apex-chart/apexcharts.css') }}" type="text/css">
 
 
 {{-- CSS For Template --}}
