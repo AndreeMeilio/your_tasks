@@ -18,11 +18,11 @@ class CreateTugasTable extends Migration
             $table->string('users_id', 255);
             $table->string('matapelajaran_id', 255);
             $table->string('namaTugas', 255);
-            $table->text('deskripsiTugas')->nullAble();
-            $table->string('guruBersangkutan', 255)->nullAble();
+            $table->text('deskripsiTugas')->nullable();
+            $table->string('guruBersangkutan', 255)->nullable();
             $table->date('tanggaldiberiTugas');
             $table->date('tanggaldeadlineTugas');
-            $table->string('tempatpengumpulanTugas', 255)->nullAble();
+            $table->string('tempatpengumpulanTugas', 255)->nullable();
             $table->string('statustugas_id', 255);
             $table->integer('tugas_berbintang', 2);
             $table->timestamps();

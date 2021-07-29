@@ -17,7 +17,7 @@ class CreateQuoteTable extends Migration
             $table->string('id', 255)->primariKey();
             $table->string('namapemberiQuote', 255);
             $table->text('isiQuote');
-            $table->string('users_id')->nullAble();
+            $table->string('users_id')->nullable();
             $table->timestamps();
         });
     }
