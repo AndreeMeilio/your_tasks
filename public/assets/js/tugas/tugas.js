@@ -62,9 +62,9 @@ $(document).ready(function(){
                             data_tugas_tabel_mobile += `
                                 <div class="row">
                                     <tr style="font-weight: bold; color: black;" bgcolor="`+ element.statustugas.colorStatustugas +`">
-                                        <td class="col-md-2">`+ element.namaTugas +`</td>
-                                        <td class="col-md-2">`+ element.tanggaldeadlineTugas +`</td>
-                                        <td class="col-md-3">
+                                        <td class="col-4">`+ element.namaTugas +`</td>
+                                        <td class="col-4">`+ element.tanggaldeadlineTugas +`</td>
+                                        <td class="col-4">
                                             <abbr title="Klik untuk mengedit data tugas ini"><a class="btn btn-secondary w-10 h-10 rounded-circle" href="/matapelajaran/`+ element.matapelajaran_id +`/tugas/`+ element.id +`/edit"><i class="fas fa-pen-square"></i></a></abbr>
                                             <abbr title="Klik untuk melihat detail data tugas ini"><a class="btn btn-info w-10 h-10 rounded-circle" href="#"><i class="fas fa-info-circle"></i></a></abbr>
                                             <abbr title="Klik untuk menghapus data tugas ini"><button class="btn btn-danger w-10 h-10 rounded-circle buttonHapus" value="`+ element.id +`"><i class="fas fa-trash-alt"></i></button></abbr>`;

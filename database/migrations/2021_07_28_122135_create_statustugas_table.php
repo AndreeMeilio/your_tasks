@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMatapelajaranTable extends Migration
+class CreateStatustugasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMatapelajaranTable extends Migration
      */
     public function up()
     {
-        Schema::create('matapelajaran', function (Blueprint $table) {
-            $table->string('id', 255)->primary();
-            $table->string('users_id', 255)->nullable();
-            $table->string('namaMatapelajaran', 255);
-            $table->text('deskripsiMatapelajaran')->nullable();
+        Schema::create('statustugas', function (Blueprint $table) {
+            $table->string('id', 255)->primaryKey();
+            $table->text('deskripsiStatustugas');
+            $table->string('aliasStatustugas', 255);
+            $table->string('colorStatustugas', 255);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateMatapelajaranTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matapelajaran');
+        Schema::dropIfExists('statustugas');
     }
 }

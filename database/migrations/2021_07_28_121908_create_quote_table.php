@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMatapelajaranTable extends Migration
+class CreateQuoteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMatapelajaranTable extends Migration
      */
     public function up()
     {
-        Schema::create('matapelajaran', function (Blueprint $table) {
-            $table->string('id', 255)->primary();
-            $table->string('users_id', 255)->nullable();
-            $table->string('namaMatapelajaran', 255);
-            $table->text('deskripsiMatapelajaran')->nullable();
+        Schema::create('quote', function (Blueprint $table) {
+            $table->string('id', 255)->primariKey();
+            $table->string('namapemberiQuote', 255);
+            $table->text('isiQuote');
+            $table->string('users_id')->nullAble();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateMatapelajaranTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matapelajaran');
+        Schema::dropIfExists('quote');
     }
 }

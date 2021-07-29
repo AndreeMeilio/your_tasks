@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 
 class StatusSeeder extends Seeder
 {
@@ -15,7 +14,6 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('id_ID');
 
         DB::table('statustugas')->insert([
             "idStatustugas" => uniqid('stgs'),

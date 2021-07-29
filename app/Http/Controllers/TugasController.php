@@ -42,12 +42,10 @@ class TugasController extends Controller
     {
         $data_mata_pelajaran = MataPelajaran::where('users_id', Auth::user()->id)->get();
 
-        $data_tugas = MataPelajaran::where('users_id', Auth::user()->id)
-                                    ->with('tugas', function($query){
-                                        $query->where('tugas_berbintang', 2)
-                                              ->with('statustugas');
-                                    })
-                                    ->get();
+        $data_tugas = Tugas::where('users_id', Auth::user()->id)
+                            ->where('tugas_berbintang', 2)
+                            ->with('matapelajaran', 'statustugas')
+                            ->get();
 
 
         return view('tugas.tugas_berbintang', ['data_mata_pelajaran' => $data_mata_pelajaran, 'data_tugas' => $data_tugas]);
@@ -136,6 +134,7 @@ class TugasController extends Controller
 
         $tambah_tugas = Tugas::create([
             "id" => $idTugas,
+            "users_id" => Auth::user()->id,
             "matapelajaran_id" => $idMatapelajaran,
             "namaTugas" => $request->input('namaTugas'),
             "deskripsiTugas" => $request->input('deskripsiTugas'),

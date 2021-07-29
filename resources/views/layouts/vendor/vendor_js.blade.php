@@ -9,6 +9,7 @@
 <script src="{{ asset('assets/vendor/iro-color-picker/iro.js') }}"></script>
 <script src="{{ asset('assets/vendor/fullcalendar/main.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/apex-chart/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/vendor/file-pond/filepond.min.js') }}"></script>
 
 {{-- Javascript For Template --}}
 <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>

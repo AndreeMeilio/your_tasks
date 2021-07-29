@@ -67,11 +67,13 @@
     <div class="d-inline d-lg-none">
         <table class="table" id="tableTugasMobile">
             <thead>
-                <tr>
-                    <th>Nama Tugas</th>
-                    <th>Tanggal Akhir Tugas</th>
-                    <th>Aksi</th>
-                </tr>
+                <div class="row">
+                    <tr>
+                        <th class="col-4">Nama Tugas</th>
+                        <th class="col-4">Tanggal Akhir Tugas</th>
+                        <th class="col-4">Aksi</th>
+                    </tr>
+                </div>
             </thead>
             <tbody id="data_tugas_tabel_mobile">
                 {{-- @foreach ($data_tugas as $item)
