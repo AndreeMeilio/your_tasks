@@ -142,7 +142,8 @@ class TugasController extends Controller
             "tanggaldiberiTugas" => date('Y-m-d', strtotime($request->input('tanggaldiberiTugas'))),
             "tanggaldeadlineTugas" => date('Y-m-d', strtotime($request->input('tanggaldeadlineTugas'))),
             "tempatpengumpulanTugas" => $request->input('tempatpengumpulanTugas'),
-            "statustugas_id" => $status_id->id
+            "statustugas_id" => $status_id->id,
+            "tugas_berbintang" => '1'
         ]);
 
         $messageSuccess = "";

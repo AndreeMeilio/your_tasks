@@ -14,7 +14,7 @@ class CreateStatustugasTable extends Migration
     public function up()
     {
         Schema::create('statustugas', function (Blueprint $table) {
-            $table->string('id', 255)->primaryKey();
+            $table->string('id', 255)->primary();
             $table->text('deskripsiStatustugas');
             $table->string('aliasStatustugas', 255);
             $table->string('colorStatustugas', 255);

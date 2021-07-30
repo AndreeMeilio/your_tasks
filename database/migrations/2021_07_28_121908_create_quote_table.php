@@ -14,7 +14,7 @@ class CreateQuoteTable extends Migration
     public function up()
     {
         Schema::create('quote', function (Blueprint $table) {
-            $table->string('id', 255)->primariKey();
+            $table->string('id', 255)->primary();
             $table->string('namapemberiQuote', 255);
             $table->text('isiQuote');
             $table->string('users_id')->nullable();
