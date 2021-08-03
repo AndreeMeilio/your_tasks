@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function(){
             Route::post('store', [TugasController::class, 'store'])->name('tugasStore');
             Route::post('{idTugas}/update', [TugasController::class, 'update'])->name('tugasUpdate');
         });
+
+        Route::post('tugas/hapus_berdasarkan_status', [TugasController::class, 'hapus_tugas_berdasarkan_status'])->name('hapus_tugas_berdasarkan_status');
     });
     
     Route::get('tugas-berbintang', [TugasController::class, 'tugasBerbintang'])->name('tugasBerbintang');
@@ -51,5 +53,5 @@ Route::middleware('auth')->group(function(){
 });
 
 Auth::routes();
-
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('registerUser');
+Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

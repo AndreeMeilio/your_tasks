@@ -8,8 +8,16 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('registerUser') }}" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="form-group"> 
+                                <input type="file" 
+                                class="filepond"
+                                name="photoprofile"
+                                id="photoprofile"
+                                accept="image/png, image/jpeg, image/gif"/>
+                        </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
@@ -74,4 +82,38 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+    <script>
+        // FilePond.registerPlugin(
+        //     FilePondPluginFileValidateType,
+        //     FilePondPluginImageExifOrientation,
+        //     FilePondPluginImagePreview,
+        //     FilePondPluginImageCrop,
+        //     FilePondPluginImageResize,
+        //     FilePondPluginImageTransform,
+        //     FilePondPluginImageEdit
+        // );
+
+        // FilePond.create(
+        //     document.getElementById('photoprofile'),
+        //     {
+        //         labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+        //         imagePreviewHeight: 170,
+        //         imageCropAspectRatio: '1:1',
+        //         imageResizeTargetWidth: 200,
+        //         imageResizeTargetHeight: 200,
+        //         stylePanelLayout: 'compact circle',
+        //         styleLoadIndicatorPosition: 'center bottom',
+        //         styleProgressIndicatorPosition: 'right bottom',
+        //         styleButtonRemoveItemPosition: 'left bottom',
+        //         styleButtonProcessItemPosition: 'right bottom',
+        //     }
+        // );
+
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector('input[type=file]');
+        const pond = FilePond.create(inputElement);
+    </script>
 @endsection

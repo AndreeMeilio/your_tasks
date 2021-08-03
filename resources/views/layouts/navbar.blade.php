@@ -36,7 +36,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="me-2 img-profile rounded-circle"
-                    src="{{ asset('assets/media/andree.png') }}">
+                    src="{{ asset('storage/'.Auth::user()->foto) }}">
                 <span class="d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
             </a>
             <!-- Dropdown - User Information -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'file' => ['required', 'max:2048']
         ]);
     }
 
@@ -62,13 +64,27 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    public function create(Request $request)
     {
-        return User::create([
-            'id' => uniqid('user'),
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $idUser = uniqid('user');
+
+        $request->photoprofile->storeAs(
+            'public',
+            $request->photoprofile->getClientOriginalName()
+        );
+
+        $register_user = User::create([
+            'id' => $idUser,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'foto' => $request->photoprofile->getClientOriginalName()
         ]);
+
+        if ($register_user){
+            return redirect(route('home'));
+        }
+        
+        return redirect('register');
     }
 }

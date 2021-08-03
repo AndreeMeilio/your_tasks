@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @include('layouts.vendor.vendor_css')
-
+    
     <title>Your Tasks</title>
 </head>
 <body>

@@ -87,16 +87,16 @@ class TugasController extends Controller
                             ->first()
                             ->namaTugas;
 
-        $messageSuccess = "";
-        $messageFailed = "";
+        $message = "";
+        // $messageFailed = "";
 
         if ($update_status_tugas){
-            $messageSuccess = "Data tugas dengan nama tugas $nama_tugas berhasil ditandai sebagai sudah dikerjakan";
+            $message = "Data tugas dengan nama tugas $nama_tugas berhasil ditandai sebagai selesai";
         } else {
-            $messageFailed = "Data tugas dengan nama tugas $nama_tugas tidak bisa ditandai sebagai sudah dikerjakan";
+            $message = "data tidak bisa ditandai sebagai selesai";
         }
 
-        return redirect(route('tugas', ['idMatapelajaran' => $request->idMatapelajaran]))->with(['success' => $messageSuccess, 'failed' => $messageFailed]);
+        return response()->json($message);
     }
 
     public function tandai_tugas_berbintang(Request $request)
@@ -205,6 +205,26 @@ class TugasController extends Controller
         $tugas = Tugas::find($request->idTugas);
 
         $hapus_tugas = $tugas->delete();
+
+        $message = "";
+        // $messageFailed = "";
+
+        if ($hapus_tugas){
+            $message = "Data Tugas Berhasil Dihapus";
+        } else {
+            $message = "Data Tugas Gagal Dihapus";
+        }
+
+        return response()->json($message);
+    }
+
+    public function hapus_tugas_berdasarkan_status(Request $request)
+    {
+        $idStatustugas = $request->idStatustugas;
+
+        $hapus_tugas = Tugas::where('users_id', Auth::user()->id)
+                        ->where('statustugas_id', $idStatustugas)
+                        ->delete();
 
         $message = "";
         // $messageFailed = "";

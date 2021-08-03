@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ asset('assets/vendor/date-time-picker/DateTimePicker.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/main.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/apex-chart/apexcharts.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ asset('assets/vendor/fil-pond/filepond.min.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/vendor/file-pond/filepond.css') }}" type="text/css">
 
 
 {{-- CSS For Template --}}
