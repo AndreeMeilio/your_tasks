@@ -67,18 +67,23 @@ class RegisterController extends Controller
     public function create(Request $request)
     {
         $idUser = uniqid('user');
+        $namaFoto = "";
 
-        $request->photoprofile->storeAs(
-            'public',
-            $request->photoprofile->getClientOriginalName()
-        );
+        if ($request->photoprofile != null){
+            $request->photoprofile->storeAs(
+                'public',
+                $request->photoprofile->getClientOriginalName()
+            );
+
+            $namaFoto = $request->photoprofile->getClientOriginalName();
+        }
 
         $register_user = User::create([
             'id' => $idUser,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'foto' => $request->photoprofile->getClientOriginalName()
+            'foto' => $namaFoto
         ]);
 
         if ($register_user){
