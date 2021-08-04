@@ -3,33 +3,72 @@
 @section('content')
 <div class="d-none d-lg-none" id="idMatapelajaran">{{ $idMatapelajaran }}</div>
 
-<div id="notifikasi"></div>
-
 <a class="btn btn-success" href="{{ route('tugasCreate', ['idMatapelajaran' => $idMatapelajaran]); }}"><i class="fas fa-book-medical"></i></a>
 
 <div class="row">
     <div class="col-12 col-lg-6">
         <label for="statusTugas">Lihat Tugas Berdasarkan Status</label>
-        <select id="statusTugas" class="form-select mb-3" aria-label="Default select example">
-            <option value="" selected>Pilih Status Tugas</option>
-            @foreach ($data_status as $item)
-            <option value="{{ $item->id }}">{{ $item->deskripsiStatustugas }}</option>
-            @endforeach
-        </select>
+    </div>
+    <div class="col-12 col-lg-6">
+        <label for="deleteTugasStatus">Hapus Tugas Berdasarkan Status</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="row">
+            <div class="col-8 col-lg-8">
+                <select id="statusTugas" class="form-select mb-3" aria-label="Default select example">
+                    <option value="" selected>Pilih Status Tugas</option>
+                    @foreach ($data_status as $item)
+                    <option value="{{ $item->id }}">{{ $item->deskripsiStatustugas }}</option>
+                    @endforeach
+                </select>
+
+                {{-- Form For Submiting See Data Per Status --}}
+                <div class="d-none d-lg-none">
+                    <form method="POST" action="{{ route('getTugasPerStatus', ['idMatapelajaran' => $idMatapelajaran]) }}">
+                        @csrf
+
+                        <input type="text" name="idStatustugas" id="value_id_status">
+                        <input type="submit" id="submitTugasPerstatus">
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-4 col-lg-4">
+                <button type="button" class="btn btn-secondary" id="tugasPerStatus">
+                    <i class="fas fa-fw fa-eye"></i>
+                    <span>Lihat</span>
+                </button>
+            </div>
+        </div>
     </div>
     <div class="col-12 col-lg-6">
         <div class="row">
-            <div class="col-10 col-lg-10">
-                <label for="deleteTugasStatus">Hapus Tugas Berdasarkan Status</label>
+            <div class="col-8 col-lg-8">
                 <select id="deleteTugasStatus" class="form-select mb-3" aria-label="Default select example">
                     <option value="" selected>Pilih Status Tugas</option>
                     @foreach ($data_status as $item)
                     <option value="{{ $item->id }}">{{ $item->deskripsiStatustugas }}</option>
                     @endforeach
                 </select>
+
+                {{-- Form For Submiting Delete Data Per Status --}}
+                <div class="d-none d-lg-none">
+                    <form method="POST" action="{{ route('hapus_tugas_berdasarkan_status', ['idMatapelajaran' => $idMatapelajaran]) }}">
+                        @csrf
+
+                        <input type="text" name="deleteIdStatustugas" id="value_delete_id_status">
+                        <input type="submit" id="submitDeleteTugasPerStatus">
+                    </form>
+                </div>
             </div>
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-danger" id="btnDeleteTugasStatus">Hapus</button>
+            <div class="col-4 col-lg-4">
+                <button type="button" class="btn btn-danger" id="btnDeleteTugasStatus">
+                    <i class="fas fa-fw fa-trash-alt"></i>
+                    <span>Hapus</span>
+                </button>
             </div>
         </div>
     </div>
@@ -62,7 +101,7 @@
                 </div>
             </thead>
             <tbody id="data_tugas_tabel">
-                {{-- @foreach ($data_tugas as $item)
+                @foreach ($data_tugas as $item)
                     <div class="row">
                         <tr style="font-weight: bold; color: black;" bgcolor="{{ $item->statustugas->colorStatustugas }}">
                             <td class="col-md-2">{{ $item->namaTugas }}</td>
@@ -75,13 +114,19 @@
                                 <abbr title="Klik untuk melihat detail data tugas ini"><a class="btn btn-info w-10 h-10 rounded-circle" href="#"><i class="fas fa-info-circle"></i></a></abbr>
                                 <abbr title="Klik untuk menghapus data tugas ini"><button class="btn btn-danger w-10 h-10 rounded-circle buttonHapus" value="{{ $item->id }}"><i class="fas fa-trash-alt"></i></button></abbr>
                                 
+                                @if ($item->tugas_berbintang == 1)
+                                    <abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><a class="btn btn-warning w-10 h-10 ms-1 rounded-circle" href="{{ route('tugasTandaiBerbintang', ['idMatapelajaran' => $item->matapelajaran_id, 'idTugas' => $item->id]) }}"><i class="far fa-star"></i></a></abbr>
+                                @else
+                                    <abbr title="Klik untuk mencabut tugas sebagai tugas berbintang"><a class="btn btn-warning w-10 h-10 ms-1 rounded-circle" href="{{ route('tugasTandaiBerbintangCancel', ['idMatapelajaran' => $item->matapelajaran_id, 'idTugas' => $item->id]) }}"><i class="fas fa-star"></i></a></abbr>
+                                @endif
+
                                 @if ($item->statustugas->aliasStatustugas != 'sudah_dikerjakan' && $item->statustugas->aliasStatustugas != 'sudah_batas_waktu_terlewat')
                                     <abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><a class="btn btn-success w-10 h-10 rounded-circle" href="{{ route('tugasTerselesaikan', ['idMatapelajaran' => $idMatapelajaran, 'idTugas' => $item->id]) }}"><i class="fas fa-check-circle"></i></a></abbr> 
                                 @endif
                             </td>  
                         </tr>    
                     </div>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -99,7 +144,7 @@
                 </div>
             </thead>
             <tbody id="data_tugas_tabel_mobile">
-                {{-- @foreach ($data_tugas as $item)
+                @foreach ($data_tugas as $item)
                     <tr>
                         <td>{{ $item->namaTugas }}</td>
                         <td>{{ $item->tanggaldeadlineTugas }}</td>
@@ -107,10 +152,20 @@
                             <abbr title="Klik untuk mengedit data tugas ini"><a class="btn btn-secondary w-10 h-10 rounded-circle" href="#"><i class="fas fa-pen-square"></i></a></abbr>
                             <abbr title="Klik untuk melihat detail data tugas ini"><a class="btn btn-info w-10 h-10 rounded-circle" href="#"><i class="fas fa-info-circle"></i></a></abbr>
                             <abbr title="Klik untuk menghapus data tugas ini"><a class="btn btn-danger w-10 h-10 rounded-circle" href="#"><i class="fas fa-trash-alt"></i></a></abbr>
-                            <abbr title="Klik untuk melihat tugas pada tugas ini"><a class="btn btn-success w-10 h-10 rounded-circle" href="#"><i class="fas fa-check-circle"></i></a></abbr>    
+                            <abbr title="Klik untuk melihat tugas pada tugas ini"><a class="btn btn-success w-10 h-10 rounded-circle" href="#"><i class="fas fa-check-circle"></i></a></abbr>
+                            
+                            @if ($item->tugas_berbintang == 1)
+                                <abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><a class="btn btn-warning w-10 h-10 ms-1 rounded-circle" href="{{ route('tugasTandaiBerbintang', ['idMatapelajaran' => $item->matapelajaran_id, 'idTugas' => $item->id]) }}"><i class="far fa-star"></i></a></abbr>
+                            @else
+                                <abbr title="Klik untuk mencabut tugas sebagai tugas berbintang"><a class="btn btn-warning w-10 h-10 ms-1 rounded-circle" href="{{ route('tugasTandaiBerbintangCancel', ['idMatapelajaran' => $item->matapelajaran_id, 'idTugas' => $item->id]) }}"><i class="fas fa-star"></i></a></abbr>
+                            @endif
+
+                            @if ($item->statustugas->aliasStatustugas != 'sudah_dikerjakan' && $item->statustugas->aliasStatustugas != 'sudah_batas_waktu_terlewat')
+                                <abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><a class="btn btn-success w-10 h-10 rounded-circle" href="{{ route('tugasTerselesaikan', ['idMatapelajaran' => $idMatapelajaran, 'idTugas' => $item->id]) }}"><i class="fas fa-check-circle"></i></a></abbr> 
+                            @endif
                         </td>  
                     </tr>    
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -119,184 +174,20 @@
 
 @section('javascript')
     <script>
+        var tableElement = document.getElementById('tableTugas');
+        var tableElementMobile = document.getElementById('tableTugasMobile');
+        var data_table = new simpleDatatables.DataTable(tableElement);
+        var data_tableMobile = new simpleDatatables.DataTable(tableElementMobile);
+
+        
         $(document).ready(function(){
             var idMatapelajaran = $("#idMatapelajaran").text();
-            
 
-            function getTugas(statusTugas = null){
-                
-                var data_tugas_tabel = "";
-                var data_tugas_tabel_mobile = "";
-                var urlGetTugas = "";
+            $("#tugasPerStatus").on('click', function(){
+                var idStatustugas = $("#statusTugas").children('option:selected').val();
 
-                if (statusTugas != null){
-                    urlGetTugas += "/matapelajaran/" + idMatapelajaran + "/tugas/get/" + statusTugas;
-                } else {
-                    urlGetTugas += "/matapelajaran/" + idMatapelajaran + "/tugas/get/";
-                }
-
-                $.ajax({
-                    type : "GET",
-                    url : urlGetTugas,
-                    cache : false,
-                    success : function(data_tugas){
-                        
-                        var jumlahTugas = data_tugas.length;
-
-                        for(let i = 0; i < data_tugas.length; i++){
-                            const element = data_tugas[i];
-
-                            var tanggalsekarang = new Date();
-                            var tanggaldeadlineTugas = new Date(element.tanggaldeadlineTugas);
-
-                            var diffTime = tanggaldeadlineTugas - tanggalsekarang;
-                            var sisa_waktu = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-
-                            data_tugas_tabel += `
-                                <div class="row">
-                                    <tr style="font-weight: bold; color: black;" bgcolor="`+ element.statustugas.colorStatustugas +`">
-                                        <td class="col-md-2">`+ element.namaTugas +`</td>
-                                        <td class="col-md-2">`+ element.tanggaldeadlineTugas +`</td>
-                                        <td class="col-md-2">`+ element.tempatpengumpulanTugas +`</td>
-                                        <td class="col-md-1">`+ sisa_waktu +` hari</td>
-                                        <td class="col-md-2">`+ element.statustugas.deskripsiStatustugas +`</td>
-                                        <td class="col-md-3">
-                                            <abbr title="Klik untuk mengedit data tugas ini"><a class="btn btn-secondary w-10 h-10 rounded-circle" href="/matapelajaran/`+ element.matapelajaran_id +`/tugas/`+ element.id +`/edit"><i class="fas fa-pen-square"></i></a></abbr>
-                                            <abbr title="Klik untuk melihat detail data tugas ini"><a class="btn btn-info w-10 h-10 rounded-circle" href="#"><i class="fas fa-info-circle"></i></a></abbr>
-                                            <abbr title="Klik untuk menghapus data tugas ini"><button class="btn btn-danger w-10 h-10 rounded-circle buttonHapus" value="`+ element.id +`"><i class="fas fa-trash-alt"></i></button></abbr>`;
-
-                                            if (element.tugas_berbintang == 1){
-                                                data_tugas_tabel += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 ms-1 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="far fa-star"></i></button></abbr>`;   
-                                            } else {
-                                                data_tugas_tabel += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 ms-1 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="fas fa-star"></i></button></abbr>`;
-                                            }
-
-                                            if (element.statustugas.aliasStatustugas != 'sudah_dikerjakan' && element.statustugas.aliasStatustugas != 'sudah_batas_waktu_terlewat'){
-                                                data_tugas_tabel += `<abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><button class="btn btn-success w-10 h-10 ms-1 rounded-circle buttonSelesai" value="`+ element.id +`"><i class="fas fa-check-circle"></i></button></abbr>`;
-                                            }
-
-                                            data_tugas_tabel += `
-                                        </td>  
-                                    </tr>    
-                                </div>
-                            `;
-
-                            data_tugas_tabel_mobile += `
-                                <div class="row">
-                                    <tr style="font-weight: bold; color: black;" bgcolor="`+ element.statustugas.colorStatustugas +`">
-                                        <td class="col-4">`+ element.namaTugas +`</td>
-                                        <td class="col-4">`+ element.tanggaldeadlineTugas +`</td>
-                                        <td class="col-4">
-                                            <abbr title="Klik untuk mengedit data tugas ini"><a class="btn btn-secondary w-10 h-10 rounded-circle" href="/matapelajaran/`+ element.matapelajaran_id +`/tugas/`+ element.id +`/edit"><i class="fas fa-pen-square"></i></a></abbr>
-                                            <abbr title="Klik untuk melihat detail data tugas ini"><a class="btn btn-info w-10 h-10 rounded-circle" href="#"><i class="fas fa-info-circle"></i></a></abbr>
-                                            <abbr title="Klik untuk menghapus data tugas ini"><button class="btn btn-danger w-10 h-10 rounded-circle buttonHapus" value="`+ element.id +`"><i class="fas fa-trash-alt"></i></button></abbr>`;
-
-                                            if (element.tugas_berbintang == 1){
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="far fa-star"></i></button></abbr>`;   
-                                            } else {
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk menandai tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 rounded-circle buttonTugasBerbintang" value="`+ element.id +`"><i class="fas fa-star"></i></button></abbr>`;
-                                            }
-
-                                            if (element.statustugas.aliasStatustugas != 'sudah_dikerjakan' && element.statustugas.aliasStatustugas != 'sudah_batas_waktu_terlewat'){
-                                                data_tugas_tabel_mobile += `<abbr title="Klik untuk mengubah status tugas menjadi sudah dikerjakan"><button class="btn btn-success w-10 h-10 ms-1 rounded-circle buttonSelesai" value="`+ element.id +`"><i class="fas fa-check-circle"></i></button></abbr>`;
-                                            }
-
-                                            data_tugas_tabel_mobile += `
-                                        </td>  
-                                    </tr>    
-                                </div>
-                            `;
-                        }
-
-                    },
-                    complete: function(){
-                        $("#jumlahTugas").html(jumlahTugas);
-                        $("#data_tugas_tabel").html(data_tugas_tabel);
-                        $("#data_tugas_tabel_mobile").html(data_tugas_tabel_mobile);
-
-
-                        var tableElement = document.getElementById('tableTugas');
-                        var tableElementMobile = document.getElementById('tableTugasMobile');
-                        var data_table = new simpleDatatables.DataTable(tableElement);
-                        var data_tableMobile = new simpleDatatables.DataTable(tableElementMobile);
-                        
-                        
-                    }
-                });
-            }
-
-            getTugas();
-
-
-            $("#statusTugas").on('change', function(){
-                var idStatustugas = $("#statusTugas option:selected").val();
-                getTugas(idStatustugas);
-            });
-
-            
-            //Request Ajax Untuk Menandai Tugas Sudah Diselesaikan
-            $(document).on('click', '.buttonSelesai', function(){
-                var idTugas = $(this).val();
-                var urlTugasSelesai = '/matapelajaran/' + idMatapelajaran + '/tugas/' + idTugas + '/check';
-
-                $.ajax({
-                    type : "GET",
-                    url : urlTugasSelesai,
-                    cache : false,
-                    success : function(msg){
-                        if (msg != "data tidak bisa ditandai sebagai selesai"){
-                            $("#notifikasi").html(
-                                `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>`+ msg +`</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>`
-                            );
-                        } else {
-                            $("#notifikasi").html(
-                                `<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>`+ msg +`</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>`
-                            );
-                        }
-                    },
-                    complete : function(){
-                        getTugas();
-                    }
-                });
-            });
-            
-            //Request Ajax Untuk Menandai Tugas Sebagai Tugas Berbintang
-            $(document).on('click', '.buttonTugasBerbintang', function(){
-                var idTugas = $(this).val();
-                var urlTugasBerbintang = '/matapelajaran/' + idMatapelajaran + '/tugas/' + idTugas + '/tugasBerbintang';
-
-                $.ajax({
-                    type : "GET",
-                    url : urlTugasBerbintang,
-                    cache : false,
-                    success : function(msg){
-
-                        if (msg != "data tidak bisa ditandai sebagai tugas berbintang"){
-                            $("#notifikasi").html(
-                                `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>`+ msg +`</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>`
-                            );
-                        } else {
-                            $("#notifikasi").html(
-                                `<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>`+ msg +`</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>`
-                            );
-                        }
-                    },
-                    complete : function(){
-                        getTugas();
-                    }
-                });
+                $("#value_id_status").val(idStatustugas);
+                $("#submitTugasPerstatus").click();
             });
 
             //Request Ajax Untuk Menghapus Data
@@ -315,33 +206,7 @@
                             text: 'Yakin',
                             btnClass: 'btn-red',
                             action: function(){
-                                $.ajax({
-                                    type : "GET",
-                                    url : urlHapus,
-                                    cache : false,
-                                    success : function(msg){
-                                    
-
-                                        if (msg == "Data Tugas Berhasil Dihapus"){
-                                            $("#notifikasi").html(
-                                                `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                    <strong>`+ msg +`</strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                </div>`
-                                            );
-                                        } else {
-                                            $("#notifikasi").html(
-                                                `<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                    <strong>`+ msg +`</strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                </div>`
-                                            );
-                                        } 
-                                    },
-                                    complete : function(){
-                                        getTugas();
-                                    }
-                                });
+                                window.location = urlHapus;
                             }
                         },
                         cancelAction: function () {
@@ -352,12 +217,12 @@
 
             //Request Ajax Untuk Delete Berdasarkan Status
             $(document).on('click', '#btnDeleteTugasStatus', function(){
-                var idStatustugas = $("#deleteTugasStatus").val();
+                var idStatustugasDelete = $("#deleteTugasStatus").val();
                 var textStatustugas = $("#deleteTugasStatus").children('option:selected').text();
 
                 var titleHapus = "Hapus Semua Tugas Dengan Status " + textStatustugas;
 
-                if (idStatustugas == "" || idStatustugas == null){
+                if (idStatustugasDelete == "" || idStatustugasDelete == null){
                     $.confirm({
                         title : "Status Tidak Dipilih",
                         content : "Tolong pilih terlebih dahulu status tugas mana yang akan dihapus!",
@@ -383,36 +248,8 @@
                                 text: 'Yakin',
                                 btnClass: 'btn-red',
                                 action: function(){
-
-                                    $.ajax({
-                                        type : "POST",
-                                        url : '/matapelajaran/tugas/hapus_berdasarkan_status',
-                                        data : {
-                                            _token : '<?php echo csrf_token() ?>',
-                                            idStatustugas : idStatustugas
-                                        },
-                                        success : function(msg){
-
-                                            if (msg == "Data Tugas Berhasil Dihapus"){
-                                                $("#notifikasi").html(
-                                                    `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                        <strong>`+ msg +`</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                    </div>`
-                                                );
-                                            } else {
-                                                $("#notifikasi").html(
-                                                    `<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                        <strong>`+ msg +`</strong>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                    </div>`
-                                                );
-                                            } 
-                                        },
-                                        complete : function(){
-                                            getTugas();
-                                        }
-                                    });
+                                    $("#value_delete_id_status").val(idStatustugasDelete)
+                                    $("#submitDeleteTugasPerStatus").click();
                                 }
                             },
                             cancelAction: function () {

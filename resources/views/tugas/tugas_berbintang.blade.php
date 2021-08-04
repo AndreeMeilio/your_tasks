@@ -23,7 +23,7 @@
                         <td class="col-3 col-md-3">{{ $item->tanggaldeadlineTugas }}</td>
                         <td class="col-2 col-md-2">{{ $item->statustugas->deskripsiStatustugas }}</td>
                         <td class="col-3 col-md-3">
-                            <abbr title="Klik untuk mencabut tugas sebagai tugas berbintang"><button class="btn btn-warning w-10 h-10 ms-1 rounded-circle buttonTugasBerbintang" value="{{ $item->id }}"><i class="fas fa-star"></i></button></abbr>
+                            <abbr title="Klik untuk mencabut tugas sebagai tugas berbintang"><a class="btn btn-warning w-10 h-10 ms-1 rounded-circle" href="{{ route('tugasTandaiBerbintangCancel', ['idMatapelajaran' => $item->matapelajaran_id, 'idTugas' => $item->id]) }}"><i class="fas fa-star"></i></a></abbr>
                             <abbr title="Klik untuk melihat tugas pada mata pelajaran ini"><a class="btn btn-primary w-10 h-10 rounded-circle" href="{{ route('tugas', ['idMatapelajaran' => $item->matapelajaran->id]) }}"><i class="fas fa-book-open"></i></a></abbr>
 
                         </td>

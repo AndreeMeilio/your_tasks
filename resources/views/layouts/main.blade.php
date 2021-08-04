@@ -19,14 +19,14 @@
                 @include('layouts.navbar')
                 <div class="container-fluid">
                     @if (Session::get('success') != '')
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
                             <strong>{{ Session::get('success') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @elseif (Session::get('failed') != '')
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
                             <strong>{{ Session::get('failed') }}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @else
                     @endif

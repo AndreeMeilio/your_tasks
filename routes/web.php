@@ -34,16 +34,17 @@ Route::middleware('auth')->group(function(){
             Route::get('view-kalendar', [TugasController::class, 'kalendar_mode'])->name('tugasKalendarMode');
             Route::get('create', [TugasController::class, 'create'])->name('tugasCreate');
             Route::get('{idTugas}/edit', [TugasController::class, 'edit'])->name('tugasEdit');
-            Route::get('get/{idStatustugas?}', [TugasController::class, 'get'])->name('getTugas');
             Route::get('{idTugas}/check', [TugasController::class, 'tandai_terselesaikan'])->name('tugasTerselesaikan');
             Route::get('{idTugas}/tugasBerbintang', [TugasController::class, 'tandai_tugas_berbintang'])->name('tugasTandaiBerbintang');
+            Route::get('{idTugas}/tugasBerbintang/cancel', [TugasController::class, 'tandai_tugas_berbintang_cancel'])->name('tugasTandaiBerbintangCancel');
             Route::get('{idTugas}/delete', [TugasController::class, 'destroy'])->name('tugasDelete');
-    
+            
             Route::post('store', [TugasController::class, 'store'])->name('tugasStore');
             Route::post('{idTugas}/update', [TugasController::class, 'update'])->name('tugasUpdate');
-        });
+            Route::post('hapus_berdasarkan_status', [TugasController::class, 'hapus_tugas_berdasarkan_status'])->name('hapus_tugas_berdasarkan_status');
 
-        Route::post('tugas/hapus_berdasarkan_status', [TugasController::class, 'hapus_tugas_berdasarkan_status'])->name('hapus_tugas_berdasarkan_status');
+            Route::match(['get', 'post'] ,'get/perstatus', [TugasController::class, 'getTugasPerstatus'])->name('getTugasPerStatus');
+        });
     });
     
     Route::get('tugas-berbintang', [TugasController::class, 'tugasBerbintang'])->name('tugasBerbintang');
