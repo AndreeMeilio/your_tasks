@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/all.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-confirm/jquery-confirm.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ asset('assets/vendor/date-time-picker/DateTimePicker.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/vendor/mcdatepicker/mc-calendar.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/fullcalendar/main.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/apex-chart/apexcharts.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('assets/vendor/file-pond/filepond.css') }}" type="text/css">

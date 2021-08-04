@@ -10,15 +10,12 @@
     </div>
     <div class="mb-3">
         <label for="tanggaldiberiTugas" class="form-label">Tanggal Diberi Tugas</label>
-        <input type="text" name="tanggaldiberiTugas" class="form-control" id="tanggaldiberiTugas" data-field="date" readonly>
+        <input type="text" name="tanggaldiberiTugas" class="form-control" id="tanggaldiberiTugas" readonly>
     </div>
     <div class="mb-3">
         <label for="tanggaldeadlineTugas" class="form-label">tanggaldeadlineTugas</label>
-        <input type="text" name="tanggaldeadlineTugas" class="form-control" id="tanggaldeadlineTugas" data-field="date" readonly>
+        <input type="text" name="tanggaldeadlineTugas" class="form-control" id="tanggaldeadlineTugas" readonly>
     </div>
-    {{-- Div Untuk Date Picker --}}
-    <div id="dateBox"></div>
-
     <div class="mb-3">
         <label for="tempatpengumpulanTugas" class="form-label">Tempat Pengumpulan Tugas (Optional)</label>
         <input type="text" name="tempatpengumpulanTugas" class="form-control" id="tempatpengumpulanTugas">
@@ -43,8 +40,13 @@
 
 @section('javascript')
     <script>
-        $(document).ready(function(){
-            $("#dateBox").DateTimePicker();
+        const tanggaldiberitugasCalendar = MCDatepicker.create({
+            el : '#tanggaldiberiTugas',
+            dateFormat : 'YYYY-MM-DD',
+        });
+        const tanggaldeadlinetugasCalendar = MCDatepicker.create({
+            el : '#tanggaldeadlineTugas',
+            dateFormat : 'YYYY-MM-DD',
         });
     </script>
 @endsection
